@@ -1,0 +1,4 @@
+1
+00:00:08,000 --> 00:00:12,000
+In this lesson, we are gonna initiate
+an empty game
