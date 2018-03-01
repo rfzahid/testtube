@@ -1,0 +1,8 @@
+# Getting all methods related to a class
+
+dir(object_type)
+
+# Going through multiple lists using a single for loop
+
+for i, j in zip(list1, list2)
+  ...
