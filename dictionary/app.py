@@ -10,7 +10,7 @@ def check(word):
         meaning = data[word]
         return meaning
     else:
-        match = get_close_matches(word, data.keys(), cutoff = 0.8)
+        match = get_close_matches(word, data.keys(), cutoff = 0.8)  # default cutoff = 0.6
         if(match != []):
             flag = input("Did you mean " + match[0] + "? " + "If yes, press Y otherwise press N: ")
             if flag == "Y":
