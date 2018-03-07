@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import datetime
 import arsenal
 
+# Take the required inputs
+
 rankDate = input("Provide date: ")
 rankRange = input("Provide range: ")
 
@@ -45,8 +47,16 @@ else:
             except:
                 pass
         record[r] = temp
+
+    # Grabbing country codes
+    country = []
+    all = soup.find_all("div", {"class":"country-item"})
+    for each in all:
+        img = each.find("img")
+        country.append(img.get("alt"))
+    record["Country"] = country
+    print(record)
     record = collections.OrderedDict(record)
-    # print(record)
 
     df = pandas.DataFrame(record)
     df.to_csv("ATP rankings.csv")
