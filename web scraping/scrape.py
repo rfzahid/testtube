@@ -9,9 +9,20 @@ import arsenal
 # Take the required inputs
 
 rankDate = input("Provide date: ")
-rankRange = input("Provide range: ")
+rankRange = input("To get ATP rankings of all players possible, type range '1-5000'\nProvide range: ")
 
-url = arsenal.generateURL(rankDate, rankRange)
+# Generate the desired URL depending on the inputs
+
+if rankDate == "" and rankRange == "":
+    url = arsenal.generateURL()
+elif rankDate == "":
+    url = arsenal.generateURL(arsenal.currentDate(), rankRange)
+elif rankRange == "":
+    url = arsenal.generateURL(rankDate)
+else:
+    url = arsenal.generateURL(rankDate, rankRange)
+print(url)
+
 r = requests.get(url)
 c = r.content
 soup = BeautifulSoup(c, "html.parser")
@@ -28,6 +39,7 @@ if arsenal.isDateValid(rankDate, date_list) == False:
     print("No ATP rankings released on this date!")
 else:
     # Grabbing all the column names
+    print("Grabbing all the columns...")
     record = {}
     all = soup.find("table", {"class":"mega-table"})
     thead = all.find_all("div", {"class":"sorting-label"})
@@ -49,13 +61,14 @@ else:
         record[r] = temp
 
     # Grabbing country codes
+    print("Grabbing country codes...")
     country = []
     all = soup.find_all("div", {"class":"country-item"})
     for each in all:
         img = each.find("img")
         country.append(img.get("alt"))
     record["Country"] = country
-    print(record)
+    # print(record)
     record = collections.OrderedDict(record)
 
     df = pandas.DataFrame(record)
